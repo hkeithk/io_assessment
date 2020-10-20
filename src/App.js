@@ -5,18 +5,20 @@ import './App.css';
 
 class App extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       url: 'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev',
       result: [],
       post: {
-        firstName: '',
-        lastName: '',
+        businessType: '',
+        businessType2: '',
+        businessId: '',
       },
     };
   }
 
   render() {
+    console.log(this.state.post.businessId);
     const getAllBusiness = async () => {
       try {
         const result = await axios.get(
@@ -50,24 +52,39 @@ class App extends React.Component {
       }));
     };
 
-    const updateName = async () => {
+    //use existing endpoint and update business type
+
+    const updateBusinessType = async () => {
       const value =
-        'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev/api/v2/updatefirstname/' +
-        this.state.post.firstName;
+        'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev/api/v2/updatebusinessparam/' +
+        this.state.post.businessType;
       console.log(value);
       try {
-        const res = await axios.post(value);
-        console.log(res);
-        // await axios.post(
-        //   'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev/api/v2/updatefirstname/' +
-        //     `${this.state.post.firstName}`
-        // );
-        // await axios.post(
-        //   'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev/api/v2/updatefirstname/' +
-        //     `${this.state.post.lastName}`
-        // );
+        const result = await axios.post(value);
+        console.log(result);
+        let reply = [{ message: result.data.message }];
+        this.setState({ result: reply });
       } catch (err) {
         return <p> An error has occured</p>;
+      }
+    };
+
+    const updateTargetBusiness = async () => {
+      const value =
+        'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev/api/v2/updatebusinessparamjson';
+      let params = {
+        business_uid: this.state.post.businessId,
+        business_type: this.state.post.businessType2,
+      };
+
+      console.log(value);
+      console.log(params);
+      try {
+        const result = await axios.post(value, params);
+        let reply = [{ message: result.data.message }];
+        this.setState({ result: reply });
+      } catch (err) {
+        return <p>An error has occured </p>;
       }
     };
 
@@ -84,18 +101,29 @@ class App extends React.Component {
         </div>
 
         <div className='show-container'>
-          <p>Update First and last name</p>
+          <p>Update business Type for 200-000001</p>
           <input
-            placeholder='First Name'
+            placeholder='Business Type'
             onChange={handleChange}
-            name='firstName'
-          ></input>
+            name='businessType'
+          />
+          <button onClick={updateBusinessType}>Submit</button>
+        </div>
+        <div>
+          <p>Update Business Type with UID</p>
           <input
-            placeholder='Last Name'
-            name='lastName'
+            placeholder='Business ID'
             onChange={handleChange}
-          ></input>
-          <button onClick={updateName}>Submit</button>
+            name='businessId'
+          />
+
+          <input
+            placeholder='Business Type'
+            onChange={handleChange}
+            name='businessType2'
+          />
+
+          <button onClick={updateTargetBusiness}>Submit</button>
         </div>
 
         <div>
@@ -113,13 +141,5 @@ class App extends React.Component {
     );
   }
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-
-//     </div>
-//   );
-// }
 
 export default App;
