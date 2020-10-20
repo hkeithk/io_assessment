@@ -90,42 +90,62 @@ class App extends React.Component {
 
     return (
       <>
-        <div className='show-container'>
-          <p>Show all businesses</p>
-          <button onClick={getAllBusiness}>Submit</button>
+        <div className='main-container'>
+          <div>
+            <h4 style={{ padding: '10px' }}>
+              What kind of information would you like?
+            </h4>
+            {/* <div className='fetch-data-container'> */}
+            <div className='show-container'>
+              <p>Show all businesses</p>
+              <button className='button' onClick={getAllBusiness}>
+                Submit
+              </button>
+            </div>
+
+            <div className='show-container'>
+              <p>Show business 200-000001</p>
+              <button className='button' onClick={getOneBusiness}>
+                Submit
+              </button>
+              {/* </div> */}
+            </div>
+          </div>
+
+          <div>
+            <h4 style={{ padding: '10px' }}>Update data below</h4>
+            <div className='show-container'>
+              <p>Update business Type for 200-000001</p>
+              <input
+                placeholder='Business Type'
+                onChange={handleChange}
+                name='businessType'
+                className='text-input'
+              />
+              <button className='button' onClick={updateBusinessType}>
+                Submit
+              </button>
+            </div>
+            <div className='show-container'>
+              <p>Update Business Type with UID</p>
+              <input
+                placeholder='Business ID'
+                onChange={handleChange}
+                name='businessId'
+                className='text-input'
+              />
+              <input
+                placeholder='Business Type'
+                onChange={handleChange}
+                name='businessType2'
+                className='text-input'
+              />
+              <button className='button' onClick={updateTargetBusiness}>
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
-
-        <div className='show-container'>
-          <p>Show business 200-000001</p>
-          <button onClick={getOneBusiness}>Submit</button>
-        </div>
-
-        <div className='show-container'>
-          <p>Update business Type for 200-000001</p>
-          <input
-            placeholder='Business Type'
-            onChange={handleChange}
-            name='businessType'
-          />
-          <button onClick={updateBusinessType}>Submit</button>
-        </div>
-        <div>
-          <p>Update Business Type with UID</p>
-          <input
-            placeholder='Business ID'
-            onChange={handleChange}
-            name='businessId'
-          />
-
-          <input
-            placeholder='Business Type'
-            onChange={handleChange}
-            name='businessType2'
-          />
-
-          <button onClick={updateTargetBusiness}>Submit</button>
-        </div>
-
         <div>
           {this.state.result.map((item, index) => (
             <ul key={index}>
