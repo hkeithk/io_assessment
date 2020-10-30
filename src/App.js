@@ -18,14 +18,14 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.post.businessId);
+    // console.log(this.state.post.businessId);
     const getAllBusiness = async () => {
       try {
         const result = await axios.get(
           'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev/api/v2/businesses'
         );
-        this.setState({ result: result.data.result });
         console.log(result);
+        this.setState({ result: result.data.result });
       } catch (err) {
         return <p>An error has occured</p>;
       }
@@ -58,7 +58,7 @@ class App extends React.Component {
       const value =
         'https://kfc19k33sc.execute-api.us-west-1.amazonaws.com/dev/api/v2/updatebusinessparam/' +
         this.state.post.businessType;
-      console.log(value);
+      // console.log(value);
       try {
         const result = await axios.post(value);
         console.log(result);
@@ -77,8 +77,8 @@ class App extends React.Component {
         business_type: this.state.post.businessType2,
       };
 
-      console.log(value);
-      console.log(params);
+      // console.log(value);
+      // console.log(params);
       try {
         const result = await axios.post(value, params);
         let reply = [{ message: result.data.message }];
